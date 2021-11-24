@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    container_name: todo-db
+    image: mysql:8.0.20
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: todo_db
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    ports:
+      - 3306:3306
+    volumes:
+      - dbdata:/var/lib/mysql
+#  app:
+#    depends_on:
+#      - mysqldb
+#    build: ./app
+#    restart: on-failure
+#    ports:
+#      - 8080:8080
+#    volumes:
+#      - .m2:/root/.m2
+#    stdin_open: true
+#    tty: true
+volumes:
+  dbdata:
