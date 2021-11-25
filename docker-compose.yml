@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  mysqldb:
-    container_name: todo-db
+  db:
+    container_name: db
     image: mysql:8.0.20
     restart: unless-stopped
     environment:
@@ -14,16 +14,28 @@ services:
       - 3306:3306
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - spring-cloud-network
 #  app:
+#    container_name: app
 #    depends_on:
-#      - mysqldb
+#      - db
 #    build: ./app
 #    restart: on-failure
 #    ports:
 #      - 8080:8080
 #    volumes:
 #      - .m2:/root/.m2
+#    networks:
+#      - spring-cloud-network
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/todo_db
 #    stdin_open: true
 #    tty: true
+
 volumes:
   dbdata:
+
+networks:
+  spring-cloud-network:
+    driver: bridge

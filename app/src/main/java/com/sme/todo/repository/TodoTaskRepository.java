@@ -12,4 +12,5 @@ public interface TodoTaskRepository extends PagingAndSortingRepository<TodoTask,
     Optional<TodoTask> findByTodoListIdAndTodoTaskId(String todoListId, String todoTaskId);
     List<TodoTask> findByTodoListIdOrderByPriorityDesc(String todoListId);
     List<TodoTask> findByTodoListIdAndIsDoneOrderByPriorityDesc(String todoListId, Boolean isDone);
+    void deleteByTodoListId(String todoListId);
 }

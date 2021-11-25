@@ -1,5 +1,6 @@
 package com.sme.todo.dto.response;
 
+import com.sme.todo.constant.Priority;
 import com.sme.todo.model.TodoTask;
 import com.sme.todo.util.DateUtil;
 import lombok.Value;
@@ -14,7 +15,7 @@ public class TodoTaskResponse implements Serializable {
     @NotEmpty String title;
     String description;
     Long dueDate;
-    @NotNull Integer priority;
+    @NotNull Priority priority;
     @NotNull Boolean isDone;
 
     public static TodoTaskResponse from(TodoTask todoTask) {
@@ -23,7 +24,7 @@ public class TodoTaskResponse implements Serializable {
                 todoTask.getTitle(),
                 todoTask.getDescription(),
                 DateUtil.toEpochMilli(todoTask.getDueDate()),
-                todoTask.getPriority(),
+                Priority.fromValue(todoTask.getPriority()),
                 todoTask.getIsDone());
     }
 }

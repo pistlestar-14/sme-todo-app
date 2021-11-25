@@ -12,5 +12,5 @@ public interface TodoTaskService {
     Optional<TodoTaskResponse> getTodoTaskById(String todoListId, String todoTaskId);
     Optional<TodoTaskResponse> createTodoTaskById(TodoTaskCreateRequest todoTaskCreateRequest);
     Optional<TodoTaskResponse> updateTodoTaskById(TodoTaskUpdateRequest todoTaskUpdateRequest);
-    void deleteTodoTaskById(String todoListId, String todoTaskId);
+    Boolean deleteTodoTaskById(String todoListId, String todoTaskId);
 }

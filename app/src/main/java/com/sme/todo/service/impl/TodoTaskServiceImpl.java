@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class TodoTaskServiceImpl implements TodoTaskService {
 
     private final TodoTaskRepository todoTaskRepository;
@@ -34,11 +33,13 @@ public class TodoTaskServiceImpl implements TodoTaskService {
         if (Objects.isNull(isDone)) {
             return todoTaskRepository.findByTodoListIdOrderByPriorityDesc(todoListId)
                     .stream()
+                    .filter(Objects::nonNull)
                     .map(TodoTaskResponse::from)
                     .collect(Collectors.toList());
         } else {
             return todoTaskRepository.findByTodoListIdAndIsDoneOrderByPriorityDesc(todoListId, isDone)
                     .stream()
+                    .filter(Objects::nonNull)
                     .map(TodoTaskResponse::from)
                     .collect(Collectors.toList());
         }
@@ -58,7 +59,7 @@ public class TodoTaskServiceImpl implements TodoTaskService {
                 .title(todoTaskCreateRequest.getTitle())
                 .description(todoTaskCreateRequest.getDescription())
                 .dueDate(DateUtil.fromEpochMilli(todoTaskCreateRequest.getDueDate()))
-                .priority(todoTaskCreateRequest.getPriority())
+                .priority(todoTaskCreateRequest.getPriority().getType())
                 .createdOn(DateUtil.timeNow())
                 .lastUpdatedOn(DateUtil.timeNow())
                 .isDone(false)
@@ -71,12 +72,12 @@ public class TodoTaskServiceImpl implements TodoTaskService {
     @Override
     public Optional<TodoTaskResponse> updateTodoTaskById(TodoTaskUpdateRequest todoTaskUpdateRequest) {
         return todoTaskRepository
-                .findByTodoListIdAndTodoTaskId(todoTaskUpdateRequest.getTodoListId(),todoTaskUpdateRequest.getTodoTaskId())
+                .findByTodoListIdAndTodoTaskId(todoTaskUpdateRequest.getTodoListId(), todoTaskUpdateRequest.getTodoTaskId())
                 .map(todoTask -> {
                     todoTask.setTitle(todoTaskUpdateRequest.getTitle());
                     todoTask.setDescription(todoTaskUpdateRequest.getDescription());
                     todoTask.setDueDate(DateUtil.fromEpochMilli(todoTaskUpdateRequest.getDueDate()));
-                    todoTask.setPriority(todoTaskUpdateRequest.getPriority());
+                    todoTask.setPriority(todoTaskUpdateRequest.getPriority().getType());
                     todoTask.setIsDone(todoTaskUpdateRequest.getIsDone());
                     todoTask.setLastUpdatedOn(DateUtil.timeNow());
                     return TodoTaskResponse.from(todoTaskRepository.save(todoTask));
@@ -85,8 +86,12 @@ public class TodoTaskServiceImpl implements TodoTaskService {
 
     @Transactional
     @Override
-    public void deleteTodoTaskById(String todoListId, String todoTaskId) {
-        todoTaskRepository.findByTodoListIdAndTodoTaskId(todoListId, todoTaskId)
-                .ifPresent(todoTaskRepository::delete);
+    public Boolean deleteTodoTaskById(String todoListId, String todoTaskId) {
+        return todoTaskRepository.findByTodoListIdAndTodoTaskId(todoListId, todoTaskId)
+                .map(todoTask -> {
+                    todoTaskRepository.delete(todoTask);
+                    return true;
+                })
+                .orElse(false);
     }
 }

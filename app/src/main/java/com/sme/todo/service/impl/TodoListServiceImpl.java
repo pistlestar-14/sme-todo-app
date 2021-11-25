@@ -5,32 +5,35 @@ import com.sme.todo.dto.request.TodoListUpdateRequest;
 import com.sme.todo.dto.response.TodoListResponse;
 import com.sme.todo.model.TodoList;
 import com.sme.todo.repository.TodoListRepository;
+import com.sme.todo.repository.TodoTaskRepository;
 import com.sme.todo.service.TodoListService;
 import com.sme.todo.util.DateUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class TodoListServiceImpl implements TodoListService {
 
     private final TodoListRepository todoListRepository;
+    private final TodoTaskRepository todoTaskRepository;
 
     @Autowired
-    public TodoListServiceImpl(TodoListRepository todoListRepository) {
+    public TodoListServiceImpl(TodoListRepository todoListRepository, TodoTaskRepository todoTaskRepository) {
         this.todoListRepository = todoListRepository;
+        this.todoTaskRepository = todoTaskRepository;
     }
 
     @Override
     public List<TodoListResponse> getAllTodoList() {
         return todoListRepository.findAllByOrderByCreatedOnAsc()
                 .stream()
+                .filter(Objects::nonNull)
                 .map(TodoListResponse::from)
                 .collect(Collectors.toList());
     }
@@ -65,7 +68,13 @@ public class TodoListServiceImpl implements TodoListService {
 
     @Transactional
     @Override
-    public void deleteTodoListById(String todoListId) {
-        todoListRepository.findById(todoListId).ifPresent(todoListRepository::delete);
+    public Boolean deleteTodoListById(String todoListId) {
+        return todoListRepository.findById(todoListId)
+                .map(todoList -> {
+                    todoListRepository.delete(todoList);
+                    todoTaskRepository.deleteByTodoListId(todoListId);
+                    return true;
+                })
+                .orElse(false);
     }
 }
