@@ -58,7 +58,7 @@ public class TodoTaskServiceImpl implements TodoTaskService {
                 .title(todoTaskCreateRequest.getTitle())
                 .description(todoTaskCreateRequest.getDescription())
                 .dueDate(DateUtil.fromEpochMilli(todoTaskCreateRequest.getDueDate()))
-                .priority(todoTaskCreateRequest.getPriority())
+                .priority(todoTaskCreateRequest.getPriority().getType())
                 .createdOn(DateUtil.timeNow())
                 .lastUpdatedOn(DateUtil.timeNow())
                 .isDone(false)
@@ -71,12 +71,12 @@ public class TodoTaskServiceImpl implements TodoTaskService {
     @Override
     public Optional<TodoTaskResponse> updateTodoTaskById(TodoTaskUpdateRequest todoTaskUpdateRequest) {
         return todoTaskRepository
-                .findByTodoListIdAndTodoTaskId(todoTaskUpdateRequest.getTodoListId(),todoTaskUpdateRequest.getTodoTaskId())
+                .findByTodoListIdAndTodoTaskId(todoTaskUpdateRequest.getTodoListId(), todoTaskUpdateRequest.getTodoTaskId())
                 .map(todoTask -> {
                     todoTask.setTitle(todoTaskUpdateRequest.getTitle());
                     todoTask.setDescription(todoTaskUpdateRequest.getDescription());
                     todoTask.setDueDate(DateUtil.fromEpochMilli(todoTaskUpdateRequest.getDueDate()));
-                    todoTask.setPriority(todoTaskUpdateRequest.getPriority());
+                    todoTask.setPriority(todoTaskUpdateRequest.getPriority().getType());
                     todoTask.setIsDone(todoTaskUpdateRequest.getIsDone());
                     todoTask.setLastUpdatedOn(DateUtil.timeNow());
                     return TodoTaskResponse.from(todoTaskRepository.save(todoTask));
