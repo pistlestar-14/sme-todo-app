@@ -1,5 +1,6 @@
 package com.sme.todo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sme.todo.constant.Priority;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 
 @Data
 public class TodoTaskCreateRequest implements Serializable {
-    private String todoListId;
+    @JsonIgnore @NotEmpty private String todoListId;
     @NotEmpty private String title;
     private String description;
     private Long dueDate;

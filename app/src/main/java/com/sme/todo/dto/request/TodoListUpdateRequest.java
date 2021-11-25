@@ -1,13 +1,13 @@
 package com.sme.todo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class TodoListUpdateRequest extends TodoListCreateRequest {
-    private String todoListId;
+public class TodoListUpdateRequest implements Serializable {
+    @JsonIgnore @NotEmpty private String todoListId;
+    @NotEmpty private String title;
 }

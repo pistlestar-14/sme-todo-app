@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AopLoggingHandler {
 
-    @Around("execution(* com.sme.todo.controller.*.*(..))" + " || " +
-            "execution(* com.sme.todo.service.*.*(..))")
+    @Around("execution(* com.sme.todo.*.*.*(..))")
     public Object logger(ProceedingJoinPoint joinPoint) throws Throwable {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -24,17 +23,12 @@ public class AopLoggingHandler {
 
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().toString();
+
         Object[] array = joinPoint.getArgs();
-        log.info("AOP before "
-                + className + "."
-                + methodName + "() :: "
-                + "Arguments : " + mapper.writeValueAsString(array));
+        log.info(className + "." + methodName + "() :: " + mapper.writeValueAsString(array));
 
         Object object = joinPoint.proceed();
-        log.info("AOP after "
-                + className + "."
-                + methodName + "() :: "
-                + "Response : " + mapper.writeValueAsString(object));
+        log.info(className + "." + methodName + "() :: " + mapper.writeValueAsString(object));
 
         return object;
     }
