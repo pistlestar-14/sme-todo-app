@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 
 public class Util {
 
+    private Util() {}
+
     public static <T> ResponseEntity<T> from(HttpStatus status) {
         return from(null, status);
     }

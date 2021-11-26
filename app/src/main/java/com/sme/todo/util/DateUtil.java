@@ -7,6 +7,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 public class DateUtil {
+
+    private DateUtil() {}
+
     private static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
 
     public static ZonedDateTime timeNow() {

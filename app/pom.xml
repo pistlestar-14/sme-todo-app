@@ -90,12 +90,10 @@
 				<version>0.8.7</version>
 				<configuration>
 					<excludes>
-						<exclude>**/com/sme/advice/**</exclude>
-						<exclude>**/com/sme/constant/**</exclude>
-						<exclude>**/com/sme/dto/**</exclude>
-						<exclude>**/com/sme/model/**</exclude>
-						<exclude>**/com/sme/util/**</exclude>
-						<exclude>**/com/sme/SmeTodoApplication.class</exclude>
+						<exclude>com/sme/todo/dto/**</exclude>
+						<exclude>com/sme/todo/model/**</exclude>
+						<exclude>com/sme/todo/advice/**</exclude>
+						<exclude>com/sme/todo/SmeTodoApplication.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>
