@@ -1,6 +1,3 @@
-FROM maven:3.8.3-jdk-8
-
-WORKDIR /app
-COPY . .
-RUN mvn clean install
-CMD mvn spring-boot:run
+FROM openjdk:8-jdk-alpine
+COPY target/todo-0.0.1-SNAPSHOT.jar todo.jar
+ENTRYPOINT ["java","-jar","/todo.jar"]
