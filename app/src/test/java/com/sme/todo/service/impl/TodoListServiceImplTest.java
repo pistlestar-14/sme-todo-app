@@ -5,7 +5,6 @@ import com.sme.todo.dto.request.TodoListUpdateRequest;
 import com.sme.todo.model.TodoList;
 import com.sme.todo.repository.TodoListRepository;
 import com.sme.todo.repository.TodoTaskRepository;
-import com.sme.todo.util.DateUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +16,13 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collections;
 import java.util.Optional;
 
+import static com.sme.todo.util.MockDto.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
 class TodoListServiceImplTest {
 
-    private static final String TODO_LIST_ID = "todo-list-id";
 
     @InjectMocks private TodoListServiceImpl todoListService;
     @Mock private TodoListRepository todoListRepository;
@@ -97,25 +96,4 @@ class TodoListServiceImplTest {
         }
     }
 
-    private TodoList prepareTodoList() {
-        return TodoList.builder()
-                .todoListId(TODO_LIST_ID)
-                .title("title-" + TODO_LIST_ID)
-                .createdOn(DateUtil.timeNow())
-                .lastUpdatedOn(DateUtil.timeNow())
-                .build();
-    }
-
-    private TodoListCreateRequest prepareTodoListCreateRequest(TodoList todoList) {
-        return TodoListCreateRequest.builder()
-                .title(todoList.getTitle())
-                .build();
-    }
-
-    private TodoListUpdateRequest prepareTodoListUpdateRequest(TodoList todoList) {
-        return TodoListUpdateRequest.builder()
-                .todoListId(todoList.getTodoListId())
-                .title(todoList.getTitle())
-                .build();
-    }
 }

@@ -111,8 +111,8 @@ public class TodoListController {
     @Operation(summary = "Delete a todo list")
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
-                    description = "Found the todo list",
+                    responseCode = "204",
+                    description = "Found the todo list, no Content to return.",
                     content = @Content(mediaType = "application/json")),
             @ApiResponse(
                     responseCode = "404",
@@ -123,7 +123,7 @@ public class TodoListController {
             @Parameter(description = "todo list id")
             @PathVariable("todo-id") @NotEmpty String todoListId) {
         return todoListService.deleteTodoListById(todoListId)
-                ? Util.from(HttpStatus.OK)
+                ? Util.from(HttpStatus.NO_CONTENT)
                 : Util.from(HttpStatus.NOT_FOUND);
     }
 

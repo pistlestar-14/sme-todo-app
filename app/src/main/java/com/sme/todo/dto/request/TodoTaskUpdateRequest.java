@@ -2,6 +2,7 @@ package com.sme.todo.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sme.todo.constant.Priority;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class TodoTaskUpdateRequest implements Serializable {
     @JsonIgnore @NotEmpty private String todoTaskId;
     @JsonIgnore @NotEmpty private String todoListId;

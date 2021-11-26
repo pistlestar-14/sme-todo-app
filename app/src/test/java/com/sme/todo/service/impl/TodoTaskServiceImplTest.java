@@ -1,14 +1,9 @@
 package com.sme.todo.service.impl;
 
-import com.sme.todo.constant.Priority;
-import com.sme.todo.dto.request.TodoListCreateRequest;
-import com.sme.todo.dto.request.TodoListUpdateRequest;
 import com.sme.todo.dto.request.TodoTaskCreateRequest;
 import com.sme.todo.dto.request.TodoTaskUpdateRequest;
-import com.sme.todo.model.TodoList;
 import com.sme.todo.model.TodoTask;
 import com.sme.todo.repository.TodoTaskRepository;
-import com.sme.todo.util.DateUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,15 +15,12 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.sme.todo.util.MockDto.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
 class TodoTaskServiceImplTest {
-
-    private static final String TODO_LIST_ID = "todo-list-id";
-    private static final String TODO_TASK_ID = "todo-task-id";
 
     @InjectMocks private TodoTaskServiceImpl todoTaskService;
     @Mock private TodoTaskRepository todoTaskRepository;
@@ -111,41 +103,5 @@ class TodoTaskServiceImplTest {
         } catch (Exception e) {
             Assertions.fail("Error occurred while deleting todo task", e);
         }
-    }
-
-    private TodoTask prepareTodoTask() {
-        return TodoTask.builder()
-                .todoListId(TODO_LIST_ID)
-                .todoTaskId(TODO_TASK_ID)
-                .title("title-" + TODO_TASK_ID)
-                .description("desc-" + TODO_TASK_ID)
-                .priority(Priority.HIGH.getType())
-                .isDone(false)
-                .dueDate(DateUtil.timeNow().plusDays(1))
-                .createdOn(DateUtil.timeNow())
-                .lastUpdatedOn(DateUtil.timeNow())
-                .build();
-    }
-
-    private TodoTaskCreateRequest prepareTodoTaskCreateRequest(TodoTask todoTask) {
-        return TodoTaskCreateRequest.builder()
-                .todoListId(todoTask.getTodoListId())
-                .title(todoTask.getTitle())
-                .description(todoTask.getDescription())
-                .priority(Priority.fromValue(todoTask.getPriority()))
-                .dueDate(DateUtil.toEpochMilli(todoTask.getDueDate()))
-                .build();
-    }
-
-    private TodoTaskUpdateRequest prepareTodoTaskUpdateRequest(TodoTask todoTask) {
-        return TodoTaskUpdateRequest.builder()
-                .todoListId(todoTask.getTodoListId())
-                .todoTaskId(todoTask.getTodoTaskId())
-                .title(todoTask.getTitle())
-                .description(todoTask.getDescription())
-                .priority(Priority.fromValue(todoTask.getPriority()))
-                .dueDate(DateUtil.toEpochMilli(todoTask.getDueDate()))
-                .isDone(todoTask.getIsDone())
-                .build();
     }
 }

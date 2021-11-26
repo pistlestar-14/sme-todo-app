@@ -46,7 +46,9 @@ public class TodoList implements Serializable {
 
         TodoList todoList = (TodoList) o;
 
-        return new EqualsBuilder().append(getTodoListId(), todoList.getTodoListId()).isEquals();
+        return new EqualsBuilder()
+                .append(getTodoListId(), todoList.getTodoListId())
+                .isEquals();
     }
 
     @Override
