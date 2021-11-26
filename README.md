@@ -60,15 +60,20 @@ Postman collection exported file is added to **postman-collection** folder.
 It can be imported to portman with support of **schema v2.1.0**.
 Fairly recent postman should be ok like **Postman v8.12.5+**
 
-## Sample TODO list
+## Sample TODO lists
 
 ```text
-- Personal tasks
-  - Goto gym
-  - Repair my laptop
-  - Pick up sister from school
-- Official tasks
-  - Complete todo webapp assignment
-  - Submit tax acknowlegement to HR
+- Personal (todo)
+  - Goto gym (task)
+  - Repair my laptop (task)
+  - Pick up sister from school (task)
+- Official (todo)
+  - Complete todo webapp assignment (task)
+  - Submit tax acknowlegement to HR (task)
 ...
 ```
+
+## Out of scope
+- Authentication
+- Extensive logging
+- Restricting any update on completed task
