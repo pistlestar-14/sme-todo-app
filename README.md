@@ -52,6 +52,12 @@ This application also provide **swagger ui** support, which is an OpenAPI defini
 You can access this on http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/.
 From here you can also try to access the API with valid request.
 
+## Postman
+
+Postman collection exported file is added to **postman-collection** folder.
+It can be imported to portman with support of **schema v2.1.0**.
+Fairly recent postman should be ok like **Postman v8.12.5+**
+
 ## API info
 
 This todo app follow this hierarchy:
