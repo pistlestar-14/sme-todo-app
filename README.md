@@ -52,4 +52,24 @@ This application also provide **swagger ui** support, which is an OpenAPI defini
 You can access this on http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/.
 From here you can also try to access the API with valid request.
 
+## API info
 
+This todo app follow this hierarchy:
+
+```text
+- Main App
+  - todo-list1
+    - todo-list1-task1
+    - todo-list1-task2
+  - todo-list2
+    - todo-list2-task1
+    - todo-list2-task2
+    - todo-list2-task3
+  - todo-list3
+  - todo-list4
+    - todo-list4-task1
+  ...
+```
+
+- The **todo-list-controller** provide API for **CRUD** operation of **todo-list**
+- The **todo-task-controller** provide API for **CRUD** operation of **todo-task** in a **todo-list**
