@@ -36,9 +36,9 @@ In order to start the process, all you need to do is:
 - Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside.
 - **CTRL+C** will terminate the docker compose
 
-To create **jacoco code coverage** from terminal you need to follow this steps:
+To create **jacoco code coverage** you need to follow this steps:
 
-- Run this script in root directory **./run_test_and_generate_jacoco_code_coverage.sh**
+- Run this script from terminal in root directory of the project **./run_test_and_generate_jacoco_code_coverage.sh**
 - This will generate **HTML UI** with latest coverage details in path **/app/target/site/jacoco**.
 - You can open the **index.html** to see the **jacoco code coverage**
 
