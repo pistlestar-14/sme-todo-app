@@ -39,7 +39,7 @@ In order to start the process, all you need to do is:
 To create **jacoco code coverage** from terminal you need to follow this steps:
 
 - Run this script in root directory **./run_test_and_generate_jacoco_code_coverage.sh**
-- This will generate **html ui** with latest coverage details in path **/app/target/site/jacoco**.
+- This will generate **HTML UI** with latest coverage details in path **/app/target/site/jacoco**.
 - You can open the **index.html** to see the **jacoco code coverage**
 
 ## The Application
