@@ -70,7 +70,6 @@ Fairly recent postman should be ok like **Postman v8.12.5+**
 - Official (todo)
   - Complete todo webapp assignment (task)
   - Submit tax acknowlegement to HR (task)
-...
 ```
 
 ## Out of scope
