@@ -36,9 +36,9 @@ In order to start the process, all you need to do is:
 - Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside.
 - **CTRL+C** will terminate the docker compose
 
-To create **jacoco code coverage** from terminal you need to follow this steps:
+To create **jacoco code coverage** you need to follow this steps:
 
-- Run this script in root directory **./run_test_and_generate_jacoco_code_coverage.sh**
+- Run this script from terminal in root directory of the project **./run_test_and_generate_jacoco_code_coverage.sh**
 - This will generate **HTML UI** with latest coverage details in path **/app/target/site/jacoco**.
 - You can open the **index.html** to see the **jacoco code coverage**
 
@@ -52,4 +52,24 @@ This application also provide **swagger ui** support, which is an OpenAPI defini
 You can access this on http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/.
 From here you can also try to access the API with valid request.
 
+## API info
 
+This todo app follow this hierarchy:
+
+```text
+- Main App
+  - todo-list1
+    - todo-list1-task1
+    - todo-list1-task2
+  - todo-list2
+    - todo-list2-task1
+    - todo-list2-task2
+    - todo-list2-task3
+  - todo-list3
+  - todo-list4
+    - todo-list4-task1
+  ...
+```
+
+- The **todo-list-controller** provide API for **CRUD** operation of **todo-list**
+- The **todo-task-controller** provide API for **CRUD** operation of **todo-task** in a **todo-list**
