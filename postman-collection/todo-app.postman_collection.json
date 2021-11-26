@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "964041b4-17b4-4245-b70d-b991a2de82b5",
+		"name": "todo-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "todo-list",
+			"item": [
+				{
+					"name": "getAllTodoList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTodoListById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTodoListById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"todo list title update 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTodoListById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTodoListById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"todo-id\", jsonData[\"todoListId\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"test todo title create\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "todo-task",
+			"item": [
+				{
+					"name": "getAllTodoTaskList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}",
+								"task"
+							],
+							"query": [
+								{
+									"key": "returnDoneTasks",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTodoTaskById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}/task/{{task-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}",
+								"task",
+								"{{task-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTodoTaskById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"test task 2\",\n    \"description\": \"test task desc\",\n    \"priority\": \"HIGH\",\n    \"dueDate\": 1637842355000,\n    \"isDone\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}/task/{{task-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}",
+								"task",
+								"{{task-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTodoTaskById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"task-id\", jsonData[\"todoTaskId\"]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"test task 1\",\n    \"description\": \"test task desc\",\n    \"priority\": \"low\",\n    \"dueDate\": 1637842355000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTodoTaskById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todo/{{todo-id}}/task/{{task-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todo",
+								"{{todo-id}}",
+								"task",
+								"{{task-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
