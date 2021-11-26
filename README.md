@@ -33,8 +33,14 @@ In order to start the process, all you need to do is:
 
 - Follow this [installation guide](https://docs.docker.com/compose/install) to install both docker and docker compose
 - Open your command-line terminal in the root directory of this repository where **deploy.sh** file is located.
-- Execute the **deploy.sh** inside your terminal.
+- Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside.
 - **CTRL+C** will terminate the docker compose
+
+To create **jacoco code coverage** from terminal you need to follow this steps:
+
+- Run this script in root directory **./run_test_and_generate_jacoco_code_coverage.sh**
+- This will generate **HTML UI** with latest coverage details in path **/app/target/site/jacoco**.
+- You can open the **index.html** to see the **jacoco code coverage**
 
 ## The Application
 
@@ -45,3 +51,5 @@ Application is hosted on a docker container which is accessible at http://localh
 This application also provide **swagger ui** support, which is an OpenAPI definition for the REST API.
 You can access this on http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config#/.
 From here you can also try to access the API with valid request.
+
+
