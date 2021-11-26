@@ -84,6 +84,35 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version>
+				<configuration>
+					<excludes>
+						<exclude>**/com/sme/advice/**</exclude>
+						<exclude>**/com/sme/constant/**</exclude>
+						<exclude>**/com/sme/dto/**</exclude>
+						<exclude>**/com/sme/model/**</exclude>
+						<exclude>**/com/sme/util/**</exclude>
+						<exclude>**/com/sme/SmeTodoApplication.class</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

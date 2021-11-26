@@ -7,8 +7,6 @@ import com.sme.todo.model.TodoTask;
 import com.sme.todo.repository.TodoTaskRepository;
 import com.sme.todo.service.TodoTaskService;
 import com.sme.todo.util.DateUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

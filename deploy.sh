@@ -9,7 +9,7 @@ trap "trap_ctrlc" 2
 
 clear &&
     cd ./app &&
-    ./mvnw clean package -DskipTests &&
+    ./mvnw clean package &&
     cd .. &&
     sudo docker-compose build &&
     sudo docker-compose up
