@@ -4,7 +4,8 @@ SME Finance business TODO list app services.
 
 This allows you to start a Spring Boot and a mysql db server by using only a single command in your linux system.
 Both, the application and the database will be started and hosted on docker constainers.
-As this is an assignment so didn't make the DB data persistent. For production deploy this config need to be updated.
+
+As this is an assignment so didn't make the DB data persistent. For production deploy, this config need to be updated.
 
 Application JPA is configured with bellow properties.
 
