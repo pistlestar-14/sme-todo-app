@@ -4,6 +4,7 @@ SME Finance business TODO list app services.
 
 This allows you to start a Spring Boot and a mysql db server by using only a single command in your linux system.
 Both, the application and the database will be started and hosted on docker constainers.
+As this is an assignment so didn't make the DB data persistent. For production deploy this config need to be updated.
 
 Application JPA is configured with bellow properties.
 
@@ -34,7 +35,7 @@ In order to start the process, all you need to do is:
 - Follow this [installation guide](https://docs.docker.com/compose/install) to install both docker and docker compose
 - Open your command-line terminal in the root directory of this repository where **deploy.sh** file is located.
 - Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside.
-- **CTRL+C** will terminate the docker compose
+- **CTRL+C** will terminate the docker compose. Note: To make continuous logging in visual mode, we didn't run it in detached.
 
 To create **jacoco code coverage** you need to follow this steps:
 
@@ -58,24 +59,15 @@ Postman collection exported file is added to **postman-collection** folder.
 It can be imported to portman with support of **schema v2.1.0**.
 Fairly recent postman should be ok like **Postman v8.12.5+**
 
-## API info
-
-This todo app follow this hierarchy:
+## Sample TODO list
 
 ```text
-- Main App
-  - todo-list1
-    - todo-list1-task1
-    - todo-list1-task2
-  - todo-list2
-    - todo-list2-task1
-    - todo-list2-task2
-    - todo-list2-task3
-  - todo-list3
-  - todo-list4
-    - todo-list4-task1
-  ...
+- Personal tasks
+  - Goto gym
+  - Repair my laptop
+  - Pick up sister from school
+- Official tasks
+  - Complete todo webapp assignment
+  - Submit tax acknowlegement to HR
+...
 ```
-
-- The **todo-list-controller** provide API for **CRUD** operation of **todo-list**
-- The **todo-task-controller** provide API for **CRUD** operation of **todo-task** in a **todo-list**
