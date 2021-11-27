@@ -35,8 +35,8 @@ In order to start the process, all you need to do is:
 
 - Follow this [installation guide](https://docs.docker.com/compose/install) to install both docker and docker compose
 - Open your command-line terminal in the root directory of this repository where **deploy.sh** file is located.
-- Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside.
-- **CTRL+C** will terminate the docker compose. Note: To make continuous logging in visual mode, we didn't run it in detached.
+- Execute the **deploy.sh** inside your terminal. This script uses **sudo** inside, so this prompt for user credential.
+- **CTRL+C** will terminate the docker compose. Note: To make continuous logging in visual mode, didn't run it in detached.
 
 To create **jacoco code coverage** you need to follow this steps:
 
