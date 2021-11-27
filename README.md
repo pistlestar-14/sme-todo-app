@@ -77,3 +77,4 @@ Fairly recent postman should be ok like **Postman v8.12.5+**
 - Extensive logging
 - Restricting any update on completed task
 - Extensive unit testing
+- Request data validation error message
