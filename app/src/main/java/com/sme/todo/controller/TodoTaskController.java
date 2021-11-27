@@ -14,14 +14,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Validated
 @RequestMapping(path = "/api/v1/todo/{todo-id}", produces = {"application/json"})
 public class TodoTaskController {
 
@@ -43,7 +41,7 @@ public class TodoTaskController {
     @GetMapping("/task")
     public ResponseEntity<List<TodoTaskResponse>> getAllTodoTaskList(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
+            @PathVariable("todo-id") String todoListId,
             @Parameter(description = "Controls whether to return, done tasks or not. When not given returns all tasks")
             @RequestParam(name = "returnDoneTasks", required = false) Boolean isDone) {
         return Util.from(todoTaskService.getAllTodoTaskList(todoListId, isDone), HttpStatus.OK);
@@ -64,9 +62,9 @@ public class TodoTaskController {
     @GetMapping("/task/{task-id}")
     public ResponseEntity<TodoTaskResponse> getTodoTaskById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
+            @PathVariable("todo-id") String todoListId,
             @Parameter(description = "todo task id")
-            @PathVariable("task-id") @NotEmpty String todoTaskId) {
+            @PathVariable("task-id") String todoTaskId) {
         return todoTaskService.getTodoTaskById(todoListId, todoTaskId)
                 .map(todoTaskResponse -> Util.from(todoTaskResponse, HttpStatus.OK))
                 .orElse(Util.from(HttpStatus.NOT_FOUND));
@@ -87,8 +85,8 @@ public class TodoTaskController {
     @PostMapping("/task")
     public ResponseEntity<TodoTaskResponse> createTodoTaskById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
-            @RequestBody TodoTaskCreateRequest todoTaskCreateRequest) {
+            @PathVariable("todo-id") String todoListId,
+            @Valid @RequestBody TodoTaskCreateRequest todoTaskCreateRequest) {
         todoTaskCreateRequest.setTodoListId(todoListId);
         return todoTaskService.createTodoTaskById(todoTaskCreateRequest)
                 .map(todoTaskResponse -> Util.from(todoTaskResponse, HttpStatus.CREATED))
@@ -104,21 +102,21 @@ public class TodoTaskController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = TodoTaskResponse.class))}),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Request data is invalid",
+                    responseCode = "404",
+                    description = "Not found the task",
                     content = @Content(mediaType = "application/json"))})
     @PutMapping("/task/{task-id}")
     public ResponseEntity<TodoTaskResponse> updateTodoTaskById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
+            @PathVariable("todo-id") String todoListId,
             @Parameter(description = "todo task id")
-            @PathVariable("task-id") @NotEmpty String todoTaskId,
-            @RequestBody TodoTaskUpdateRequest todoTaskUpdateRequest) {
+            @PathVariable("task-id") String todoTaskId,
+            @Valid @RequestBody TodoTaskUpdateRequest todoTaskUpdateRequest) {
         todoTaskUpdateRequest.setTodoListId(todoListId);
         todoTaskUpdateRequest.setTodoTaskId(todoTaskId);
         return todoTaskService.updateTodoTaskById(todoTaskUpdateRequest)
                 .map(todoTaskResponse -> Util.from(todoTaskResponse, HttpStatus.OK))
-                .orElse(Util.from(HttpStatus.BAD_REQUEST));
+                .orElse(Util.from(HttpStatus.NOT_FOUND));
     }
 
     @Operation(summary = "Delete a todo task from a todo list")
@@ -134,9 +132,9 @@ public class TodoTaskController {
     @DeleteMapping("/task/{task-id}")
     public ResponseEntity<Void> deleteTodoTaskById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
+            @PathVariable("todo-id") String todoListId,
             @Parameter(description = "todo task id")
-            @PathVariable("task-id") @NotEmpty String todoTaskId) {
+            @PathVariable("task-id") String todoTaskId) {
         return todoTaskService.deleteTodoTaskById(todoListId, todoTaskId)
                 ? Util.from(HttpStatus.NO_CONTENT)
                 : Util.from(HttpStatus.NOT_FOUND);

@@ -17,7 +17,7 @@ public class DateUtil {
     }
 
     public static ZonedDateTime fromEpochMilli(Long milli) {
-        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(milli), ZONE_OFFSET);
+        return milli == null ? null : ZonedDateTime.ofInstant(Instant.ofEpochMilli(milli), ZONE_OFFSET);
     }
 
     public static Long toEpochMilli(ZonedDateTime zonedDateTime) {

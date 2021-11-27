@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import org.apache.commons.lang3.StringUtils;
 
 public enum Priority {
-    NONE(0),
     LOW(1),
     MEDIUM(2),
     HIGH(3),
@@ -22,7 +21,7 @@ public enum Priority {
             case 1: return LOW;
             case 2: return MEDIUM;
             case 3: return HIGH;
-            default: return NONE;
+            default: return null;
         }
     }
 
@@ -32,7 +31,7 @@ public enum Priority {
             case "LOW": return LOW;
             case "MEDIUM": return MEDIUM;
             case "HIGH": return HIGH;
-            default: return NONE;
+            default: return null;
         }
     }
 

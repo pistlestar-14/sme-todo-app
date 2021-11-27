@@ -12,6 +12,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 public class TodoListUpdateRequest implements Serializable {
-    @JsonIgnore @NotEmpty private String todoListId;
+    @JsonIgnore private String todoListId;
     @NotEmpty private String title;
 }

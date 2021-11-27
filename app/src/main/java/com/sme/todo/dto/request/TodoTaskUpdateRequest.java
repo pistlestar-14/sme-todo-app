@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,11 +15,11 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 public class TodoTaskUpdateRequest implements Serializable {
-    @JsonIgnore @NotEmpty private String todoTaskId;
-    @JsonIgnore @NotEmpty private String todoListId;
-    @NotEmpty private String title;
+    @JsonIgnore private String todoTaskId;
+    @JsonIgnore private String todoListId;
+    @Valid @NotEmpty private String title;
     private String description;
     private Long dueDate;
-    @NotNull private Priority priority;
+    @Valid @NotNull private Priority priority;
     private Boolean isDone;
 }

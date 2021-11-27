@@ -17,6 +17,11 @@ class DateUtilTest {
     }
 
     @Test
+    void fromEpochMilli_with_null_input() {
+        Assertions.assertNull(null);
+    }
+
+    @Test
     void getUniqueTimeBasedUUID() {
         Assertions.assertEquals(36, DateUtil.getUniqueTimeBasedUUID().length());
     }

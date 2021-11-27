@@ -14,14 +14,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@Validated
 @RequestMapping(path = "/api/v1/todo", produces = {"application/json"})
 public class TodoListController {
 
@@ -60,7 +58,7 @@ public class TodoListController {
     @GetMapping("/{todo-id}")
     public ResponseEntity<TodoListResponse> getTodoListById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId) {
+            @PathVariable("todo-id") String todoListId) {
         return todoListService.getTodoListById(todoListId)
                 .map(todoListResponse -> Util.from(todoListResponse, HttpStatus.OK))
                 .orElse(Util.from(HttpStatus.NOT_FOUND));
@@ -79,7 +77,8 @@ public class TodoListController {
                     description = "Request data is invalid",
                     content = @Content(mediaType = "application/json"))})
     @PostMapping
-    public ResponseEntity<TodoListResponse> createTodoListById(@RequestBody TodoListCreateRequest todoListCreateRequest) {
+    public ResponseEntity<TodoListResponse> createTodoListById(
+            @Valid @RequestBody TodoListCreateRequest todoListCreateRequest) {
         return todoListService.createTodoListById(todoListCreateRequest)
                 .map(todoListResponse -> Util.from(todoListResponse, HttpStatus.CREATED))
                 .orElse(Util.from(HttpStatus.BAD_REQUEST));
@@ -94,18 +93,18 @@ public class TodoListController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = TodoListResponse.class))}),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Request data is invalid",
+                    responseCode = "404",
+                    description = "Not found the todo list",
                     content = @Content(mediaType = "application/json"))})
     @PutMapping("/{todo-id}")
     public ResponseEntity<TodoListResponse> updateTodoListById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId,
-            @RequestBody TodoListUpdateRequest todoListUpdateRequest) {
+            @PathVariable("todo-id") String todoListId,
+            @Valid @RequestBody TodoListUpdateRequest todoListUpdateRequest) {
         todoListUpdateRequest.setTodoListId(todoListId);
         return todoListService.updateTodoListById(todoListUpdateRequest)
                 .map(todoListResponse -> Util.from(todoListResponse, HttpStatus.OK))
-                .orElse(Util.from(HttpStatus.BAD_REQUEST));
+                .orElse(Util.from(HttpStatus.NOT_FOUND));
     }
 
     @Operation(summary = "Delete a todo list")
@@ -121,7 +120,7 @@ public class TodoListController {
     @DeleteMapping("/{todo-id}")
     public ResponseEntity<Void> deleteTodoListById(
             @Parameter(description = "todo list id")
-            @PathVariable("todo-id") @NotEmpty String todoListId) {
+            @PathVariable("todo-id") String todoListId) {
         return todoListService.deleteTodoListById(todoListId)
                 ? Util.from(HttpStatus.NO_CONTENT)
                 : Util.from(HttpStatus.NOT_FOUND);
