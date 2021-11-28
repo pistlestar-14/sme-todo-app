@@ -57,7 +57,7 @@ From here you can also try to access the API with valid request.
 ## Postman
 
 Postman collection exported file is added to **postman-collection** folder.
-It can be imported to portman with support of **schema v2.1.0**.
+It can be imported to postman with support of **schema v2.1.0**.
 Fairly recent postman should be ok like **Postman v8.12.5+**
 
 ## Sample TODO lists
