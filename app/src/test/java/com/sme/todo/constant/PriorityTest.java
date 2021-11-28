@@ -16,10 +16,20 @@ class PriorityTest {
     }
 
     @Test
+    void fromValue_null_test() {
+        Assertions.assertNull(Priority.fromValue(-1));
+    }
+
+    @Test
     void fromName() {
         Arrays.stream(Priority.values())
                 .map(Priority::getName)
                 .map(Priority::fromName)
                 .forEach(Assertions::assertNotNull);
+    }
+
+    @Test
+    void fromName_null_test() {
+        Assertions.assertNull(Priority.fromName("lower"));
     }
 }

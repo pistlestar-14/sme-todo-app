@@ -18,7 +18,7 @@ class DateUtilTest {
 
     @Test
     void fromEpochMilli_with_null_input() {
-        Assertions.assertNull(null);
+        Assertions.assertNull(DateUtil.fromEpochMilli(null));
     }
 
     @Test
