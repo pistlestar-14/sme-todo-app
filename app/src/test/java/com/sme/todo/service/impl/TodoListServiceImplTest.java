@@ -23,6 +23,9 @@ import static org.mockito.Mockito.doNothing;
 
 class TodoListServiceImplTest {
 
+    private final TodoList todoList = prepareTodoList();
+    private final TodoListCreateRequest todoListCreateRequest = prepareTodoListCreateRequest(todoList);
+    private final TodoListUpdateRequest todoListUpdateRequest = prepareTodoListUpdateRequest(todoList);
 
     @InjectMocks private TodoListServiceImpl todoListService;
     @Mock private TodoListRepository todoListRepository;
@@ -31,13 +34,17 @@ class TodoListServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        given(todoListRepository.findAllByOrderByCreatedOnAsc()).willReturn(Collections.singletonList(todoList));
+        given(todoListRepository.findById(TODO_LIST_ID)).willReturn(Optional.of(todoList));
+        given(todoListRepository.save(any())).willReturn(todoList);
+        doNothing().when(todoListRepository).delete(any());
+        doNothing().when(todoTaskRepository).deleteByTodoListId(any());
     }
 
     @Test
     void getAllTodoList() {
         try {
-            TodoList todoList = prepareTodoList();
-            given(todoListRepository.findAllByOrderByCreatedOnAsc()).willReturn(Collections.singletonList(todoList));
             Assertions.assertFalse(CollectionUtils.isEmpty(todoListService.getAllTodoList()));
         } catch (Exception e) {
             Assertions.fail("Error occurred while getting todo list", e);
@@ -47,8 +54,6 @@ class TodoListServiceImplTest {
     @Test
     void getTodoListById() {
         try {
-            TodoList todoList = prepareTodoList();
-            given(todoListRepository.findById(TODO_LIST_ID)).willReturn(Optional.of(todoList));
             Assertions.assertNotNull(todoListService.getTodoListById(TODO_LIST_ID));
         } catch (Exception e) {
             Assertions.fail("Error occurred while getting todo list", e);
@@ -58,10 +63,6 @@ class TodoListServiceImplTest {
     @Test
     void createTodoListById() {
         try {
-            TodoList todoList = prepareTodoList();
-            given(todoListRepository.save(any())).willReturn(todoList);
-
-            TodoListCreateRequest todoListCreateRequest = prepareTodoListCreateRequest(todoList);
             Assertions.assertNotNull(todoListService.createTodoListById(todoListCreateRequest));
         } catch (Exception e) {
             Assertions.fail("Error occurred while creating todo list", e);
@@ -71,11 +72,6 @@ class TodoListServiceImplTest {
     @Test
     void updateTodoListById() {
         try {
-            TodoList todoList = prepareTodoList();
-            given(todoListRepository.findById(TODO_LIST_ID)).willReturn(Optional.of(todoList));
-            given(todoListRepository.save(any())).willReturn(todoList);
-
-            TodoListUpdateRequest todoListUpdateRequest = prepareTodoListUpdateRequest(todoList);
             Assertions.assertNotNull(todoListService.updateTodoListById(todoListUpdateRequest));
         } catch (Exception e) {
             Assertions.fail("Error occurred while updating todo list", e);
@@ -85,11 +81,6 @@ class TodoListServiceImplTest {
     @Test
     void deleteTodoListById() {
         try {
-            TodoList todoList = prepareTodoList();
-            given(todoListRepository.findById(TODO_LIST_ID)).willReturn(Optional.of(todoList));
-            doNothing().when(todoListRepository).delete(any());
-            doNothing().when(todoTaskRepository).deleteByTodoListId(any());
-
             Assertions.assertTrue(todoListService.deleteTodoListById(TODO_LIST_ID));
         } catch (Exception e) {
             Assertions.fail("Error occurred while deleting todo list", e);
