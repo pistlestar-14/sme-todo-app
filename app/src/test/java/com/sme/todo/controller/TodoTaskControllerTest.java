@@ -8,8 +8,10 @@ import com.sme.todo.dto.response.TodoTaskResponse;
 import com.sme.todo.model.TodoTask;
 import com.sme.todo.service.TodoTaskService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,18 +35,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class TodoTaskControllerTest {
 
+    private final TodoTask todoTask = prepareTodoTask();
+    private final TodoTaskResponse todoTaskResponse = TodoTaskResponse.from(todoTask);
+    private final TodoTaskCreateRequest todoTaskCreateRequest = prepareTodoTaskCreateRequest(todoTask);
+    private final TodoTaskUpdateRequest todoTaskUpdateRequest = prepareTodoTaskUpdateRequest(todoTask);
+
     @Autowired private MockMvc mockMvc;
     @MockBean private TodoTaskService todoTaskService;
     @Autowired private ObjectMapper objectMapper;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        List<TodoTaskResponse> todoTaskResponses = Collections.singletonList(todoTaskResponse);
+        given(todoTaskService.getAllTodoTaskList(TODO_LIST_ID, null)).willReturn(todoTaskResponses);
+        given(todoTaskService.getTodoTaskById(TODO_LIST_ID, TODO_TASK_ID)).willReturn(Optional.of(todoTaskResponse));
+        given(todoTaskService.createTodoTaskById(todoTaskCreateRequest)).willReturn(Optional.of(todoTaskResponse));
+        given(todoTaskService.updateTodoTaskById(todoTaskUpdateRequest)).willReturn(Optional.of(todoTaskResponse));
+        given(todoTaskService.deleteTodoTaskById(TODO_LIST_ID, TODO_TASK_ID)).willReturn(true);
+        given(todoTaskService.deleteTodoTaskById(TODO_LIST_ID, TODO_TASK_INVALID_ID)).willReturn(false);
+    }
+
     @Test
     void getAllTodoTaskList() {
         try {
-            TodoTask todoTask = prepareTodoTask();
-            TodoTaskResponse todoTaskResponse = TodoTaskResponse.from(todoTask);
-            given(todoTaskService.getAllTodoTaskList(TODO_LIST_ID, null))
-                    .willReturn(Collections.singletonList(todoTaskResponse));
-
             MvcResult result = mockMvc
                     .perform(get("/api/v1/todo/" + TODO_LIST_ID + "/task"))
                     .andExpect(status().isOk())
@@ -61,11 +76,6 @@ class TodoTaskControllerTest {
     @Test
     void getTodoTaskById() {
         try {
-            TodoTask todoTask = prepareTodoTask();
-            TodoTaskResponse todoTaskResponse = TodoTaskResponse.from(todoTask);
-            given(todoTaskService.getTodoTaskById(TODO_LIST_ID, TODO_TASK_ID))
-                    .willReturn(Optional.of(todoTaskResponse));
-
             MvcResult result = mockMvc
                     .perform(get("/api/v1/todo/" + TODO_LIST_ID + "/task/" + TODO_TASK_ID))
                     .andExpect(status().isOk())
@@ -81,11 +91,6 @@ class TodoTaskControllerTest {
     @Test
     void createTodoTaskById() {
         try {
-            TodoTask todoTask = prepareTodoTask();
-            TodoTaskCreateRequest todoTaskCreateRequest = prepareTodoTaskCreateRequest(todoTask);
-            TodoTaskResponse todoTaskResponse = TodoTaskResponse.from(todoTask);
-            given(todoTaskService.createTodoTaskById(todoTaskCreateRequest)).willReturn(Optional.of(todoTaskResponse));
-
             MvcResult result = mockMvc
                     .perform(post("/api/v1/todo/" + TODO_LIST_ID + "/task")
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -103,11 +108,6 @@ class TodoTaskControllerTest {
     @Test
     void updateTodoTaskById() {
         try {
-            TodoTask todoTask = prepareTodoTask();
-            TodoTaskUpdateRequest todoTaskUpdateRequest = prepareTodoTaskUpdateRequest(todoTask);
-            TodoTaskResponse todoTaskResponse = TodoTaskResponse.from(todoTask);
-            given(todoTaskService.updateTodoTaskById(todoTaskUpdateRequest)).willReturn(Optional.of(todoTaskResponse));
-
             MvcResult result = mockMvc
                     .perform(put("/api/v1/todo/" + TODO_LIST_ID + "/task/" + TODO_TASK_ID)
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -125,8 +125,6 @@ class TodoTaskControllerTest {
     @Test
     void deleteTodoTaskById_found() {
         try {
-            given(todoTaskService.deleteTodoTaskById(TODO_LIST_ID, TODO_TASK_ID)).willReturn(true);
-
             mockMvc
                     .perform(delete("/api/v1/todo/" + TODO_LIST_ID + "/task/" + TODO_TASK_ID))
                     .andExpect(status().isNoContent());
@@ -138,10 +136,8 @@ class TodoTaskControllerTest {
     @Test
     void deleteTodoTaskById_not_found() {
         try {
-            given(todoTaskService.deleteTodoTaskById(TODO_LIST_ID, TODO_TASK_ID)).willReturn(false);
-
             mockMvc
-                    .perform(delete("/api/v1/todo/" + TODO_LIST_ID + "/task/" + TODO_TASK_ID))
+                    .perform(delete("/api/v1/todo/" + TODO_LIST_ID + "/task/" + TODO_TASK_INVALID_ID))
                     .andExpect(status().isNotFound());
         } catch (Exception e) {
             Assertions.fail("Error occurred while deleting todo task", e);

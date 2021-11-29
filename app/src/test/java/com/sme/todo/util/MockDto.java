@@ -11,7 +11,9 @@ import com.sme.todo.model.TodoTask;
 public class MockDto {
 
     public static final String TODO_LIST_ID = "todo-list-id";
+    public static final String TODO_LIST_INVALID_ID = "todo-list-invalid-id";
     public static final String TODO_TASK_ID = "todo-task-id";
+    public static final String TODO_TASK_INVALID_ID = "todo-task-invalid-id";
 
     private MockDto() {}
 
