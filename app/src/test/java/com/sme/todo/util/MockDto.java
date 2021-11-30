@@ -18,9 +18,13 @@ public class MockDto {
     private MockDto() {}
 
     public static TodoList prepareTodoList() {
+        return prepareTodoList(TODO_LIST_ID);
+    }
+
+    public static TodoList prepareTodoList(String id) {
         return TodoList.builder()
-                .todoListId(TODO_LIST_ID)
-                .title("title-" + TODO_LIST_ID)
+                .todoListId(id)
+                .title("title-" + id)
                 .createdOn(DateUtil.timeNow())
                 .lastUpdatedOn(DateUtil.timeNow())
                 .build();
@@ -40,11 +44,19 @@ public class MockDto {
     }
 
     public static TodoTask prepareTodoTask() {
+        return prepareTodoTask(TODO_TASK_ID);
+    }
+
+    public static TodoTask prepareTodoTask(String id) {
+        return prepareTodoTask(TODO_LIST_ID, id);
+    }
+
+    public static TodoTask prepareTodoTask(String listId, String id) {
         return TodoTask.builder()
-                .todoListId(TODO_LIST_ID)
-                .todoTaskId(TODO_TASK_ID)
-                .title("title-" + TODO_TASK_ID)
-                .description("desc-" + TODO_TASK_ID)
+                .todoListId(listId)
+                .todoTaskId(id)
+                .title("title-" + id)
+                .description("desc-" + id)
                 .priority(Priority.HIGH.getType())
                 .isDone(false)
                 .dueDate(DateUtil.timeNow().plusDays(1))

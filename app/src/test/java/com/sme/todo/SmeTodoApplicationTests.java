@@ -10,4 +10,8 @@ class SmeTodoApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void main() {
+		SmeTodoApplication.main(new String[] {});
+	}
 }

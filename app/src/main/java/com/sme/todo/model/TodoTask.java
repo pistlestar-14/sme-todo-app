@@ -58,12 +58,13 @@ public class TodoTask implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof TodoList)) return false;
+        if (!(o instanceof TodoTask)) return false;
 
-        TodoList todoList = (TodoList) o;
+        TodoTask todoTask = (TodoTask) o;
 
         return new EqualsBuilder()
-                .append(getTodoListId(), todoList.getTodoListId())
+                .append(getTodoListId(), todoTask.getTodoListId())
+                .append(getTodoTaskId(), todoTask.getTodoTaskId())
                 .isEquals();
     }
 
@@ -71,6 +72,7 @@ public class TodoTask implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(getTodoListId())
+                .append(getTodoTaskId())
                 .toHashCode();
     }
 }
