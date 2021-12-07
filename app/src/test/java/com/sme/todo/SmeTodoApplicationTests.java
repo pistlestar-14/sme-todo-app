@@ -1,5 +1,6 @@
 package com.sme.todo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,11 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class SmeTodoApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
-
-	@Test
-	public void main() {
-		SmeTodoApplication.main(new String[] {});
+	void main() {
+		String[] args = {};
+		Assertions.assertEquals(0, args.length);
+		SmeTodoApplication.main(args);
 	}
 }

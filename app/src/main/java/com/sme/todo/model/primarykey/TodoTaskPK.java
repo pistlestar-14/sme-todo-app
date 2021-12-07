@@ -1,4 +1,4 @@
-package com.sme.todo.model.primaryKey;
+package com.sme.todo.model.primarykey;
 
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;

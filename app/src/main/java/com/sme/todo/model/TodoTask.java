@@ -1,6 +1,6 @@
 package com.sme.todo.model;
 
-import com.sme.todo.model.primaryKey.TodoTaskPK;
+import com.sme.todo.model.primarykey.TodoTaskPK;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -121,7 +122,7 @@ public class TodoListController {
     public ResponseEntity<Void> deleteTodoListById(
             @Parameter(description = "todo list id")
             @PathVariable("todo-id") String todoListId) {
-        return todoListService.deleteTodoListById(todoListId)
+        return BooleanUtils.isTrue(todoListService.deleteTodoListById(todoListId))
                 ? Util.from(HttpStatus.NO_CONTENT)
                 : Util.from(HttpStatus.NOT_FOUND);
     }

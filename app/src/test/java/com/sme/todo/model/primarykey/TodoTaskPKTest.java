@@ -1,4 +1,4 @@
-package com.sme.todo.model.primaryKey;
+package com.sme.todo.model.primarykey;
 
 import org.junit.jupiter.api.Test;
 
